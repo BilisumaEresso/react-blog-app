@@ -42,7 +42,11 @@ const Signup=()=>{
                 }
                 setLoad(true)
                const response= await axios.post("/auth/signup",requestBody)
-               const data=response.data
+               const data = response.data;
+               window.localStorage.setItem(
+                 "blogData",
+                 JSON.stringify(data.data)
+               );
                toast.success(data.message,{
                 position:"top-right",
                 autoClose:true

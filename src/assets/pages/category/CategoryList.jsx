@@ -88,7 +88,7 @@ const CategoryList = () => {
     const input=e.target.value
     setSearch(input)
    try{
-      const response= await axios.get(`/category?page=${currentPage}&q=${input}`)
+      const response= await axios.get(`/category?page=${currentPage}&q=${input}&size=${size}`)
       const data=response.data
       setCategories(data.category)
       setTotalPage(data.pages)
@@ -164,10 +164,15 @@ const CategoryList = () => {
                   >
                     Update
                   </button>
-                  <button onClick={()=>{setCategoryId(category._id);
-                    setShowModal(true)
-                    
-                  }} className="button">Delete</button>
+                  <button
+                    onClick={() => {
+                      setCategoryId(category._id);
+                      setShowModal(true);
+                    }}
+                    className="button"
+                  >
+                    Delete
+                  </button>
                 </th>
               </tr>
             ))}
@@ -203,27 +208,40 @@ const CategoryList = () => {
           >
             next
           </button>
-          <label>Size</label>
-          <input
-            style={{ width: "30px" }}
-            type="number"
-            name="size"
-            value={size}
-            onChange={(e) => setSize(e.target.value)}
-          />
         </div>
       )}
-      <Modal show={showModal} onHide={()=>{setShowModal(false)
-        setCategoryId(null)
-      }}>
+      <label>Size</label>
+      <input
+        style={{ width: "50px" }}
+        type="number"
+        name="size"
+        value={size}
+        onChange={(e) => setSize(e.target.value)}
+      />
+      <Modal
+        show={showModal}
+        onHide={() => {
+          setShowModal(false);
+          setCategoryId(null);
+        }}
+      >
         <Modal.Header closeButton={true}>
           <Modal.Title>Are you sure you want to delete ?</Modal.Title>
         </Modal.Header>
         <Modal.Footer>
-          <div style={{margin:"0 auto"}}>
-            <Button onClick={()=>{setShowModal(false)
-               setCategoryId(null)}} className="no-button">No</Button>
-            <Button onClick={handleDelete} className="yes-button">Yes</Button>
+          <div style={{ margin: "0 auto" }}>
+            <Button
+              onClick={() => {
+                setShowModal(false);
+                setCategoryId(null);
+              }}
+              className="no-button"
+            >
+              No
+            </Button>
+            <Button onClick={handleDelete} className="yes-button">
+              Yes
+            </Button>
           </div>
         </Modal.Footer>
       </Modal>

@@ -1,4 +1,6 @@
-.primary-link {
+@import "tailwindcss";
+
+/* .primary-link {
   background-color: aliceblue;
   padding: 16px 32px;
 }
@@ -85,4 +87,4 @@ tr:nth-child(even) {
 .forgot-password {
   display: block;
   margin-bottom: 10px;
-}
+} */

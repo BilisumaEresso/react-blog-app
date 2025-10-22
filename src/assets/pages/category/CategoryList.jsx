@@ -212,7 +212,7 @@ const CategoryList = () => {
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                          <div className="flex space-x-2">
+                          <div className="flex space-x-3">
                             <button
                               onClick={() =>
                                 navigate(`update-category/${category._id}`)
@@ -254,7 +254,7 @@ const CategoryList = () => {
                             onClick={() =>
                               navigate(`update-category/${category._id}`)
                             }
-                            className="bg-blue-600 text-white px-3 py-1.5 rounded-3  hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors text-xs font-medium"
+                            className="bg-blue-600 text-white px-3 py-1.5 rounded-3  hover:bg-blue-700 focus:outline-none focus:ring-2  focus:ring-blue-500 transition-colors text-xs font-medium"
                           >
                             Edit
                           </button>
@@ -399,7 +399,7 @@ const CategoryList = () => {
             <div className="flex space-x-3 w-full  justify-around">
               <Button
                 onClick={handleDelete}
-                className= "yes bg-red-500 text-white px-6 py-2 rounded-3 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 border-0"
+                className="bg-red-500 text-white px-6 py-2 rounded-3 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 border-0"
               >
                 Delete
               </Button>

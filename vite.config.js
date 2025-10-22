@@ -5,5 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(),tailwindcss()],
-})
+  plugins: [react(), tailwindcss()],
+  // eslint-disable-next-line no-undef
+  base: process.env.VITE_BASE_PATH || "/react-blog-app",
+});

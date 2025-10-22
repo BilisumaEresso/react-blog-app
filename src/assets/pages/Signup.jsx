@@ -1,5 +1,5 @@
 import { useState } from "react";
-import signupValidator from "../../validators/SignupValidator";
+import signupValidator from "../../validators/signupValidator";
 import axios from "../../utils/axiosInstance";
 import { toast } from "react-toastify";
 import { useNavigate, Link } from "react-router-dom";

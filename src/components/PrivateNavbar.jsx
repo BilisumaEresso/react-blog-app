@@ -100,7 +100,7 @@ const PrivateNavbar = () => {
               className="md:hidden bg-gray-100 hover:bg-gray-200 p-1.5 rounded-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <svg
-                className="w-5 h-5 text-gray-600"
+                className="w-10 h-10 text-gray-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

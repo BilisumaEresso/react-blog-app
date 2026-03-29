@@ -2,12 +2,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "./context/AuthContext";
 import { useState } from "react";
+import { useTheme } from "./context/ThemeContext";
 
 const PrivateNavbar = () => {
   const auth = useAuth();
   const role = auth.role;
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isDark, toggleTheme } = useTheme();
 
   const handleLogout = () => {
     window.localStorage.removeItem("blogData");
@@ -19,17 +21,17 @@ const PrivateNavbar = () => {
   };
 
   const navLinkClass = ({ isActive }) =>
-    `px-3 py-2 rounded-3 text-xs font-medium transition-all duration-200 ${
+    `px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 ${
       isActive
-        ? "bg-blue-600 text-white shadow-sm border border-blue-700"
-        : "text-gray-600 hover:text-gray-900 hover:bg-gray-100 border border-transparent"
+        ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/30 ring-1 ring-white/20"
+        : "text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50/50 dark:hover:bg-blue-900/20"
     }`;
 
   const mobileNavLinkClass = ({ isActive }) =>
-    `block px-3 py-2 rounded-3 text-sm font-medium transition-all duration-200 ${
+    `block px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300 ${
       isActive
-        ? "bg-blue-600 text-white shadow-sm border border-blue-700"
-        : "text-gray-600 hover:text-gray-900 hover:bg-gray-100 border border-transparent"
+        ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/30"
+        : "text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800"
     }`;
 
   const getRoleBadge = (role) => {
@@ -48,12 +50,21 @@ const PrivateNavbar = () => {
   const roleBadge = getRoleBadge(role);
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="sticky top-4 z-50 px-4 sm:px-6 lg:px-8 max-w-[90rem] mx-auto w-full transition-all duration-300 mb-8">
+      <nav className="bg-white/70 dark:bg-[var(--color-dark-card)]/70 backdrop-blur-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.5)] border border-white/40 dark:border-white/10 rounded-3xl transition-colors duration-300 px-4 md:px-6 py-2.5">
         {/* Desktop Navigation - Compact */}
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center h-12">
           {/* Left Navigation Links - Hidden on mobile */}
-          <div className="hidden md:flex space-x-1 py-2">
+          <div className="hidden lg:flex space-x-2 py-2 items-center">
+            
+            <div className="shrink-0 flex items-center pr-4 border-r border-gray-200 dark:border-gray-700/50 mr-2">
+              <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white font-extrabold tracking-tighter shadow-lg shadow-blue-500/30 mr-2">
+                B
+              </div>
+              <span className="font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 tracking-tight text-lg">
+                Blog
+              </span>
+            </div>
             <NavLink to="/" className={navLinkClass}>
               Home
             </NavLink>
@@ -75,6 +86,10 @@ const PrivateNavbar = () => {
             <NavLink to="/setting" className={navLinkClass}>
               Settings
             </NavLink>
+
+            <NavLink to="/puzzle" className={navLinkClass}>
+              Play 2048
+            </NavLink>
           </div>
 
           {/* Right Section - Role & Logout */}
@@ -86,10 +101,27 @@ const PrivateNavbar = () => {
               {roleBadge.label}
             </div>
 
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-full text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              aria-label="Toggle Dark Mode"
+            >
+              {isDark ? (
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              )}
+            </button>
+
             {/* Logout Button - Hidden on mobile */}
             <button
               onClick={handleLogout}
-              className="hidden sm:flex bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 text-xs font-medium transition-all duration-200 rounded-3 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1"
+              className="hidden sm:flex bg-red-500 hover:bg-red-600 text-white px-5 py-2 text-sm font-bold transition-all duration-300 rounded-xl shadow-lg shadow-red-500/30 hover:shadow-red-500/50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 ring-1 ring-white/20"
             >
               Logout
             </button>
@@ -97,10 +129,10 @@ const PrivateNavbar = () => {
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden bg-gray-100 hover:bg-gray-200 p-1.5 rounded-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="lg:hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 p-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200 shadow-sm"
             >
               <svg
-                className="w-10 h-10 text-gray-600"
+                className="w-5 h-5 text-gray-700 dark:text-gray-300"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -109,14 +141,14 @@ const PrivateNavbar = () => {
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
+                    strokeWidth={2.5}
                     d="M6 18L18 6M6 6l12 12"
                   />
                 ) : (
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
+                    strokeWidth={2.5}
                     d="M4 6h16M4 12h16M4 18h16"
                   />
                 )}
@@ -127,7 +159,7 @@ const PrivateNavbar = () => {
 
         {/* Mobile Navigation - Compact */}
         {isMenuOpen && (
-          <div className="md:hidden py-2 border-t border-gray-200 bg-white">
+          <div className="lg:hidden mt-4 pt-4 border-t border-gray-200/50 dark:border-gray-700/50">
             {/* Mobile Navigation Links */}
             <div className="space-y-1">
               <NavLink
@@ -171,13 +203,21 @@ const PrivateNavbar = () => {
               >
                 Settings
               </NavLink>
+
+              <NavLink
+                to="/puzzle"
+                className={mobileNavLinkClass}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Play 2048
+              </NavLink>
             </div>
 
             {/* Mobile Role & Logout */}
-            <div className="mt-2 pt-2 border-t border-gray-200 space-y-2">
+            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800 space-y-3">
               {/* Role Badge - Mobile */}
               <div
-                className={`px-3 py-1 rounded-full border text-xs font-medium ${roleBadge.color}`}
+                className={`px-3 py-1.5 rounded-xl border text-sm font-medium inline-block ${roleBadge.color}`}
               >
                 Role: {roleBadge.label}
               </div>
@@ -188,15 +228,15 @@ const PrivateNavbar = () => {
                   handleLogout();
                   setIsMenuOpen(false);
                 }}
-                className="w-full bg-red-500 hover:bg-red-600 text-white px-3 py-2 text-xs font-medium transition-all duration-200 rounded-3 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1"
+                className="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-3 text-sm font-bold transition-all duration-300 rounded-xl shadow-lg shadow-red-500/30 ring-1 ring-white/20 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
               >
                 Logout
               </button>
             </div>
           </div>
         )}
-      </div>
-    </nav>
+      </nav>
+    </div>
   );
 };
 

@@ -1,90 +1,32 @@
 @import "tailwindcss";
 
-/* .primary-link {
-  background-color: aliceblue;
-  padding: 16px 32px;
+@custom-variant dark (&:is(.dark *));
+
+@layer utilities {
+  .animate-blob {
+    animation: blob 8s infinite;
+  }
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
 }
 
-nav a {
-  margin-right: 16px;
+@keyframes blob {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(40px, -60px) scale(1.1); }
+  66% { transform: translate(-30px, 30px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
 }
 
-nav a.active {
-  text-decoration: none;
-  font-weight: bold;
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
+html {
+  scroll-behavior: smooth;
 }
-
-td,
-th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-
-.button-block {
-  display: block;
-  margin: 25px 0px;
-}
-
-.table-title {
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-.saerch-input {
-  padding: 5px;
-  display: block;
-  border: 1px solid #bbb;
-  border-radius: 5px;
-  width: 300px;
-  margin-bottom: 20px;
-}
-
-.no-button {
-  background-color: #ddd !important;
-  color: #111 !important;
-  border: none !important;
-  margin-right: 20px;
-}
-
-.no-button:hover {
-  background-color: #ccc !important;
-}
-
-.yes-button {
-  background-color: red !important;
-  border: none !important;
-}
-
-.yes-button:hover {
-  background-color: crimson !important;
-}
-
-.pag-container {
-  margin: 15px;
-}
-
-.pag-button {
-  border: 1px solid #aaa;
-  border-radius: 4px;
-  margin-right: 15px;
-}
-
-.pag-button:hover {
-  background-color: #ccc;
-}
-
-.forgot-password {
-  display: block;
-  margin-bottom: 10px;
-} */
